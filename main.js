@@ -4,9 +4,20 @@ const score = document.querySelector('.score'),
     car = document.createElement('div');
 car.classList.add('car');
 
+const enemies = [
+    './image/enemy.png', 
+    './image/enemy2.png', 
+    './image/enemy3.png', 
+    './image/enemy4.png', 
+    './image/enemy5.png', 
+    './image/enemy6.png'
+];
+const audio = new Audio('./audio/577340__josefpres__bass-loops-011-with-drums-short-loop-120-bpm.wav');
+
 start.addEventListener('click', startGame);
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
+
 
 const keys = {
     ArrowUp: false,
@@ -30,7 +41,13 @@ function startGame(){
     start.classList.add('hide');
     gameArea.classList.remove('hide'); 
     gameArea.innerHTML = '';
-    
+    audio.play();
+    audio.loop = true;
+    keys.ArrowUp = false;
+    keys.ArrowDown = false;
+    keys.ArrowLeft = false;
+    keys.ArrowRight = false;
+        
 
     for (let i = 0; i < getQuantityElements(100); i++){
         const line = document.createElement('div');
@@ -42,11 +59,12 @@ function startGame(){
 
     for (let i = 0; i < getQuantityElements(100 * setting.traffic); i++){
         const enemy = document.createElement('div');
+        const enemyColor = getRandomEnemy();
         enemy.classList.add('enemy');
         enemy.y = -100 * setting.traffic * i + 1;
         enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         enemy.style.top = enemy.y + 'px';
-        enemy.style.background = 'transparent url(image/enemy2.png) center / cover no-repeat';
+        enemy.style.backgroundImage = `url(${enemyColor})`;
         gameArea.appendChild(enemy);
     }
 
@@ -62,11 +80,16 @@ function startGame(){
     requestAnimationFrame(playGame);
 }
 
+function getRandomEnemy(){
+    return enemies[Math.floor(Math.random() * enemies.length)];
+}
+
 function playGame(){
     setting.score += setting.speed;
     score.innerHTML = 'SCORE<br>' + setting.score;
     moveRoad();
     moveEnemy();
+    
     if (setting.start){
         if (keys.ArrowLeft && setting.x > 0){
             setting.x -= setting.speed;
@@ -121,10 +144,7 @@ function moveEnemy(){
             carRect.right >= enemyRect.left && 
             carRect.left <= enemyRect.right &&
             carRect.bottom >= enemyRect.top) {
-            setting.start = false;
-            console.warn('CRASH');
-            start.classList.remove('hide');
-            start.style.top = score.offsetHeight;
+            endGame();
         }
 
         item.y += setting.speed / 2;
@@ -134,4 +154,13 @@ function moveEnemy(){
             item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         }
     });
+}
+
+function endGame(){
+    alert('GAME OVER!');
+    audio.pause();
+    setting.start = false;
+    console.warn('CRASH');
+    start.classList.remove('hide');
+    start.style.top = score.offsetHeight;
 }
