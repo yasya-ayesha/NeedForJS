@@ -1,3 +1,7 @@
+:root{
+    --height-elem: 100px
+}
+
 /* reset css styles */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -45,28 +49,35 @@ table {
 /* custom styles */
 body{
     background-color: green;
+    font-family: sans-serif;
 }
 .hide{
     display: none;
 }
 
+.game{
+    display: flex;
+    height: 100%;
+}
+
 .car{
-    width: 50px;
-    height: 100px;
-    background: transparent url('image/player.png') center / cover no-repeat;
+    width: calc(var(--height-elem) / 2);
+    height: var(--height-elem);
+    background: transparent url('image/player.png') center / contain no-repeat;
     position: absolute;
+    left: 125px;
+    bottom: 10px;
 }
 
 .enemy{
-    width: 50px;
-    height: 100px;
+    width: calc(var(--height-elem) / 2);
+    height: var(--height-elem);
     position: absolute;
-    background: transparent center / cover;
+    background: transparent center / contain;
 }
 
 .gameArea{
     width: 300px;
-    height: 100%;
     position: relative;
     margin: auto;
     background: #222;
@@ -76,40 +87,66 @@ body{
 .line{
     position: absolute;
     width: 10px;
-    height: 50px;
+    height: calc(var(--height-elem) / 2);
     background-color: #fff;
     left: 145px;
 }
 
-.start{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 2rem 0;
-    text-align: center;
-    z-index: 200;
-    color: #fff;
-    background: #000;
-    font-size: 1.5rem;
-    cursor: pointer;
-    font-family: sans-serif;
-    font-weight: 700;
+.visually-hidden{
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0 !important;
+    border: 0 !important;
+    height: 1px !important;
+    width: 1px !important;
+    overflow: hidden;
 }
 
-.score{
-    position: absolute;
-    top: 0;
+.start{
+    position: fixed;
     left: 0;
+    top: 0;
+    height: calc(50px - 2rem);
     width: 100%;
-    background: #000;
     padding: 1rem 0;
     z-index: 200;
     color: #fff;
     background: #000;
-    font-size: 1.5rem;
-    font-family: sans-serif;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 700;
+    box-shadow: 3px 3px 5px 1px #014701;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn{
+    font: inherit;
+    background-color: #ccc;
+    color: #222;
+    border: none;
+    cursor: pointer;
+    padding: 5px 15px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.btn:disabled{
+    background-color: #222;
+    color: #000;
+}
+
+.score{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     text-align: center;
+    box-shadow: -3px -3px 5px 1px #014701;
+    height: calc(50px - 2rem);
+    background: #000;
+    padding: 1rem 0;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 500;
 }
