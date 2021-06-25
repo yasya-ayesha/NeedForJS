@@ -84,10 +84,10 @@ function startGame(){
     audio.play();
     audio.volume = 0.1;
     audio.loop = true;
-    // keys.ArrowUp = false;
-    // keys.ArrowDown = false;
-    // keys.ArrowLeft = false;
-    // keys.ArrowRight = false;
+    keys.ArrowUp = false;
+    keys.ArrowDown = false;
+    keys.ArrowLeft = false;
+    keys.ArrowRight = false;
         
 
     for (let i = 0; i < getQuantityElements(HEIGHT_ELEM); i++){
